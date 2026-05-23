@@ -2,19 +2,18 @@
 =============================================================
 Create Database and Schemas
 =============================================================
-Script Purpose:
-    This script creates a new database named 'DataWarehouse' after checking if it already exists. 
-    If the database exists, it is dropped and recreated. Additionally, the script sets up three schemas 
-    within the database: 'bronze', 'silver', and 'gold'.
-	
-WARNING:
-    Running this script will drop the entire 'DataWarehouse' database if it exists. 
-    All data in the database will be permanently deleted. Proceed with caution 
-    and ensure you have proper backups before running this script.
+Purpose:
+    Creates the Data Warehouse database and required schemas
+    for the Medallion Architecture (Bronze, Silver, Gold).
+
+    If the database already exists, it will be dropped and recreated.
+    Schemas are then initialized for the ETL layers.
+=============================================================
 */
 
 USE master;
 
+-- drop and recreate database if it already exists
 IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'data_warehouse')
 BEGIN
     ALTER DATABASE data_warehouse SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
@@ -22,12 +21,17 @@ BEGIN
 END;
 GO
 
+-- create fresh database
 CREATE DATABASE data_warehouse;
+GO
 
 USE data_warehouse;
+GO
 
+-- create schemas for medallion layers
 CREATE SCHEMA bronze;
 GO
 CREATE SCHEMA silver;
 GO
 CREATE SCHEMA gold;
+GO
