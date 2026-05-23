@@ -1,13 +1,17 @@
 /*
 ===============================================================================
-DDL Script: Create Bronze Tables
+Bronze Layer Tables (Raw Data Layer)
 ===============================================================================
-Script Purpose:
-    This script creates tables in the 'bronze' schema, dropping existing tables 
-    if they already exist.
-	  Run this script to re-define the DDL structure of 'bronze' Tables
+Purpose:
+    This script creates raw ingestion tables in the Bronze layer.
+    Data is stored as-is from source systems with no transformations.
 ===============================================================================
 */
+
+
+-- =============================================================================
+-- CRM Customer Data (Raw)
+-- =============================================================================
 
 IF OBJECT_ID('bronze.crm_cust_info', 'U') IS NOT NULL
     DROP TABLE bronze.crm_cust_info;
@@ -24,6 +28,11 @@ CREATE TABLE bronze.crm_cust_info (
 );
 GO
 
+
+-- =============================================================================
+-- CRM Product Data (Raw)
+-- =============================================================================
+
 IF OBJECT_ID('bronze.crm_prd_info', 'U') IS NOT NULL
     DROP TABLE bronze.crm_prd_info;
 GO
@@ -38,6 +47,11 @@ CREATE TABLE bronze.crm_prd_info (
     prd_end_dt   DATETIME
 );
 GO
+
+
+-- =============================================================================
+-- CRM Sales Data (Raw Transactions)
+-- =============================================================================
 
 IF OBJECT_ID('bronze.crm_sales_details', 'U') IS NOT NULL
     DROP TABLE bronze.crm_sales_details;
@@ -56,6 +70,11 @@ CREATE TABLE bronze.crm_sales_details (
 );
 GO
 
+
+-- =============================================================================
+-- ERP Location Data
+-- =============================================================================
+
 IF OBJECT_ID('bronze.erp_loc_a101', 'U') IS NOT NULL
     DROP TABLE bronze.erp_loc_a101;
 GO
@@ -65,6 +84,11 @@ CREATE TABLE bronze.erp_loc_a101 (
     cntry  NVARCHAR(50)
 );
 GO
+
+
+-- =============================================================================
+-- ERP Customer Demographics
+-- =============================================================================
 
 IF OBJECT_ID('bronze.erp_cust_az12', 'U') IS NOT NULL
     DROP TABLE bronze.erp_cust_az12;
@@ -76,6 +100,11 @@ CREATE TABLE bronze.erp_cust_az12 (
     gen    NVARCHAR(50)
 );
 GO
+
+
+-- =============================================================================
+-- ERP Product Category Mapping
+-- =============================================================================
 
 IF OBJECT_ID('bronze.erp_px_cat_g1v2', 'U') IS NOT NULL
     DROP TABLE bronze.erp_px_cat_g1v2;
